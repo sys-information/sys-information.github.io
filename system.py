@@ -6,13 +6,18 @@ from gi.repository import Gtk, GLib
 
 gi.require_version("Gtk", "4.0")
 
+
 class SystemInfoWindow(Gtk.ApplicationWindow):
     def __init__(self, app):
         super().__init__(application=app)
-        self.set_title("System Information")
+        self.set_title("System Information Beta ⚠")
         self.set_default_size(400, 300)
 
         grid = Gtk.Grid()
+        grid.set_margin_start(10)
+        grid.set_margin_end(10)
+        grid.set_margin_top(10)
+        grid.set_margin_bottom(10)
         self.set_child(grid)
 
         self.info_label = Gtk.Label()
@@ -23,7 +28,7 @@ class SystemInfoWindow(Gtk.ApplicationWindow):
 
     def update_info(self):
         info = self.get_system_info()
-        self.info_label.set_text(info)
+        self.info_label.set_markup(info)
         return True
 
     def get_system_info(self):
@@ -34,27 +39,28 @@ class SystemInfoWindow(Gtk.ApplicationWindow):
         cpu = psutil.cpu_percent(interval=1)
 
         info = (
-            f"System: {uname.system}\n"
-            f"Node Name: {uname.node}\n"
-            f"Release: {uname.release}\n"
-            f"Version: {uname.version}\n"
-            f"Machine: {uname.machine}\n"
-            f"Processor: {uname.processor}\n"
-            f"Memory: {mem.total / (1024 ** 3):.2f} GB\n"
-            f"Disk Usage: {disk.percent}%\n"
-            f"CPU Usage: {cpu}%\n"
-            f"Network Interfaces:\n"
+            f"<b>System:</b> {uname.system}\n"
+            f"<b>Node Name:</b> {uname.node}\n"
+            f"<b>Release:</b> {uname.release}\n"
+            f"<b>Version:</b> {uname.version}\n"
+            f"<b>Machine:</b> {uname.machine}\n"
+            f"<b>Processor:</b> {uname.processor}\n"
+            f"<b>Memory:</b> {mem.total / (1024 ** 3):.2f} GB\n"
+            f"<b>Disk Usage:</b> {disk.percent}%\n"
+            f"<b>CPU Usage:</b> {cpu}%\n"
+            f"<b>Network Interfaces:</b>\n"
         )
 
         for interface, addrs in net.items():
             info += f"  {interface}:\n"
             for addr in addrs:
                 if addr.family == socket.AF_INET:
-                    info += f"    IP Address: {addr.address}\n"
+                    info += f"    <b>IP Address:</b> {addr.address}\n"
                 elif addr.family == socket.AF_PACKET:
-                    info += f"    MAC Address: {addr.address}\n"
+                    info += f"    <b>MAC Address:</b> {addr.address}\n"
 
         return info
+
 
 class SystemInfoApp(Gtk.Application):
     def __init__(self):
@@ -64,6 +70,7 @@ class SystemInfoApp(Gtk.Application):
     def on_activate(self, app):
         win = SystemInfoWindow(self)
         win.present()
+
 
 app = SystemInfoApp()
 app.run(None)
