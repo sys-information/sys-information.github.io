@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="img/logo.png" type="image/x-icon">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>System Information - Home</title>
+    <style>
+        body {
+            font-family: "Cantarell", sans-serif;
+            background-color: #ffffff;
+            margin: 0;
+            padding: 0;
+        }
+        .navbar {
+            background-color: #2e3436;
+            padding: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .navbar a {
+            color: #eeeeec;
+            text-decoration: none;
+            padding: 10px 20px;
+        }
+        .navbar a:hover {
+            background-color: #555753;
+            border-radius: 4px;
+        }
+        .container {
+            padding: 20px;
+        }
+        .button {
+            background-color: #3465a4;
+            color: #eeeeec;
+            border: none;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+        .button:hover {
+            background-color: #204a87;
+        }
+        .a {
+            text-decoration: none;
+            color: #ffffff;
+        }
+        * {
+            text-align: center;
+        }
+        .copy-container {
+            border: 2px solid #ccc;
+            background-color: rgb(250, 250, 178);
+            width: 300px;
+            padding: 5px 15px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0 auto;
+        }
+        .copy-button {
+            cursor: pointer;
+            margin-left: 10px;
+        }      
+
+    </style>
+</head>
+<script>
+function copyToClipboard() {
+  var text = document.getElementById("copy-text");
+
+  var range = document.createRange();
+  range.selectNode(text);
+  window.getSelection().addRange(range);
+
+  try {
+    document.execCommand('copy');
+    console.log('Text copied!');
+  } catch (err) {
+    console.error('Failed to copy text: ', err);
+  }
+
+  window.getSelection().removeAllRanges();
+}
+</script>
+<body>
+    <div class="navbar">
+        <a href="">Home</a>
+    </div>
+    <div class="container">
+        <h1>Welcome to "System Information"</h1>
+        <p>This is unstable version! ⚠</p>
+        <img src="img/picture.png">
+        <p>This program is written in Python and uses the GTK library<br/> to create a GUI that displays system information.</p>
+        <button class="button"><a class="a" href="system.py">Download script</a></button>
+        <p>How to run?</p>
+        <div class="copy-container">
+            <p id="copy-text">python /path/to/file</p>
+            <button class="copy-button" onclick="copyToClipboard()">Copy</button>
+          </div>
+    </div>
+</body>
+</html>
