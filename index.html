@@ -3,9 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=0.8">
     <link rel="icon" href="img/logo.png" type="image/x-icon">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>System Information - Home</title>
     <style>
         body {
@@ -69,7 +68,18 @@
         .copy-button {
             cursor: pointer;
             margin-left: 10px;
-        }      
+        }
+
+        .container1 {
+            background-color: #2e3436;
+            color: #ffffff;
+            width: 500px;
+            padding: 5px 15px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 30px auto;
+        }
 
     </style>
 </head>
@@ -105,6 +115,12 @@ function copyToClipboard() {
         <div class="copy-container">
             <p id="copy-text">python /path/to/file</p>
             <button class="copy-button" onclick="copyToClipboard()">Copy</button>
+          </div>
+          <div class="container1">
+            <h1>Changelogs</h1>
+            <ul>
+                <li>Version 0.2 - Bold text in headings, small margins</li>
+            </ul>
           </div>
     </div>
 </body>
