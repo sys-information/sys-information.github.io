@@ -3,6 +3,7 @@ import psutil
 import platform
 import socket
 from gi.repository import Gtk, GLib
+import cpuinfo
 
 gi.require_version("Gtk", "4.0")
 
@@ -10,8 +11,10 @@ gi.require_version("Gtk", "4.0")
 class SystemInfoWindow(Gtk.ApplicationWindow):
     def __init__(self, app):
         super().__init__(application=app)
-        self.set_title("System Information Beta ⚠")
+        self.set_title("System Information")
         self.set_default_size(400, 300)
+        
+        self.set_resizable(False)
 
         grid = Gtk.Grid()
         grid.set_margin_start(10)
@@ -44,7 +47,19 @@ class SystemInfoWindow(Gtk.ApplicationWindow):
             f"<b>Release:</b> {uname.release}\n"
             f"<b>Version:</b> {uname.version}\n"
             f"<b>Machine:</b> {uname.machine}\n"
-            f"<b>Processor:</b> {uname.processor}\n"
+            f"<b>Processor Details:</b>\n"
+        )
+
+        cpu_info = cpuinfo.get_cpu_info()
+        try:
+            info += f"  Brand: {cpu_info['brand_raw']}\n"
+        except KeyError:
+            info += f"  Brand: Information unavailable\n"
+
+        info += f"  Hz: {cpu_info['hz_advertised_friendly']}\n"
+        info += f"  Cache (L1): {cpu_info['l1_data_cache_size']}\n"
+
+        info += (
             f"<b>Memory:</b> {mem.total / (1024 ** 3):.2f} GB\n"
             f"<b>Disk Usage:</b> {disk.percent}%\n"
             f"<b>CPU Usage:</b> {cpu}%\n"
